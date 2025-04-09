@@ -1,1 +1,44 @@
-/* Updated styles for event and mod panels */
+
+.App {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  text-align: center;
+  background-color: #121212;
+  min-height: 100vh;
+  color: white;
+}
+
+.App-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2rem 3rem;
+  border-bottom: 2px solid #333;
+}
+
+.App-logo {
+  height: 120px;
+  width: auto;
+  margin-right: 2rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+.header-text {
+  text-align: left;
+}
+
+.header-title {
+  font-size: 2rem;
+  color: orange;
+}
+
+.header-subtitle {
+  font-size: 1rem;
+  color: #ccc;
+  margin-top: 5px;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
