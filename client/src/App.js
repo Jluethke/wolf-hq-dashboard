@@ -15,31 +15,34 @@ const App = () => {
   const [banned, setBanned] = useState(() => getStored('bannedUsers', []));
   const [eventData, setEventData] = useState({ title: '', date: '', time: '', description: '' });
   const [events, setEvents] = useState(() => getStored('events', []));
-  const [score, setScore] = useState(0);
+  const [pack, setPack] = useState([]);
+  const [speed, setSpeed] = useState(2000);
 
   useEffect(() => localStorage.setItem('announcements', JSON.stringify(announcements)), [announcements]);
   useEffect(() => localStorage.setItem('welcomedMembers', JSON.stringify(welcomed)), [welcomed]);
   useEffect(() => localStorage.setItem('bannedUsers', JSON.stringify(banned)), [banned]);
   useEffect(() => localStorage.setItem('events', JSON.stringify(events)), [events]);
 
-  // === Alien Tap Game ===
   useEffect(() => {
-    const alien = document.getElementById("alien");
-    const moveAlien = () => {
+    const wolf = document.getElementById("wolf-icon");
+    if (!wolf) return;
+
+    const move = () => {
       const x = Math.random() * 90;
       const y = Math.random() * 90;
-      if (alien) {
-        alien.style.top = `${y}%`;
-        alien.style.left = `${x}%`;
-      }
+      wolf.style.left = `${x}%`;
+      wolf.style.top = `${y}%`;
     };
-    const interval = setInterval(() => moveAlien(), 1500);
+
+    const interval = setInterval(move, speed);
     return () => clearInterval(interval);
-  }, []);
+  }, [speed]);
 
-  const handleAlienClick = () => setScore(score + 1);
+  const handleWolfClick = () => {
+    setPack(prev => [...prev, "https://i.imgur.com/LbSHfMu.png"]);
+    setSpeed(prev => Math.max(400, prev - 150));
+  };
 
-  // === Dashboard Actions ===
   const postAnnouncement = () => {
     if (announcement.trim()) {
       setAnnouncements([...announcements, announcement]);
@@ -49,15 +52,15 @@ const App = () => {
   const editAnnouncement = (i) => {
     const edited = prompt("Edit announcement:", announcements[i]);
     if (edited !== null) {
-      const copy = [...announcements];
-      copy[i] = edited;
-      setAnnouncements(copy);
+      const updated = [...announcements];
+      updated[i] = edited;
+      setAnnouncements(updated);
     }
   };
   const deleteAnnouncement = (i) => {
-    const copy = [...announcements];
-    copy.splice(i, 1);
-    setAnnouncements(copy);
+    const updated = [...announcements];
+    updated.splice(i, 1);
+    setAnnouncements(updated);
   };
 
   const welcomeUser = () => {
@@ -67,9 +70,9 @@ const App = () => {
     }
   };
   const undoWelcome = (i) => {
-    const copy = [...welcomed];
-    copy.splice(i, 1);
-    setWelcomed(copy);
+    const updated = [...welcomed];
+    updated.splice(i, 1);
+    setWelcomed(updated);
   };
 
   const kickUser = () => {
@@ -79,9 +82,9 @@ const App = () => {
     }
   };
   const unbanUser = (i) => {
-    const copy = [...banned];
-    copy.splice(i, 1);
-    setBanned(copy);
+    const updated = [...banned];
+    updated.splice(i, 1);
+    setBanned(updated);
   };
 
   const addEvent = () => {
@@ -98,15 +101,15 @@ const App = () => {
     const time = prompt("Edit event time:", evt.time);
     const description = prompt("Edit event description:", evt.description);
     if (title && date && time) {
-      const copy = [...events];
-      copy[i] = { title, date, time, description };
-      setEvents(copy);
+      const updated = [...events];
+      updated[i] = { title, date, time, description };
+      setEvents(updated);
     }
   };
   const deleteEvent = (i) => {
-    const copy = [...events];
-    copy.splice(i, 1);
-    setEvents(copy);
+    const updated = [...events];
+    updated.splice(i, 1);
+    setEvents(updated);
   };
 
   return (
@@ -120,7 +123,7 @@ const App = () => {
       </header>
 
       <main className="dashboard">
-        {/* Orange Column */}
+        {/* Orange */}
         <div className="stack-column">
           <div className="panel orange-panel">
             <h2>📢 Post Announcement</h2>
@@ -141,7 +144,7 @@ const App = () => {
           </div>
         </div>
 
-        {/* Green Column */}
+        {/* Green */}
         <div className="stack-column">
           <div className="panel green-panel">
             <h2>👋 Welcome Members</h2>
@@ -161,7 +164,7 @@ const App = () => {
           </div>
         </div>
 
-        {/* Red Column */}
+        {/* Red */}
         <div className="stack-column">
           <div className="panel red-panel">
             <h2>🚫 Kick/Ban User</h2>
@@ -181,7 +184,7 @@ const App = () => {
           </div>
         </div>
 
-        {/* Blue Column */}
+        {/* Blue */}
         <div className="stack-column">
           <div className="panel blue-panel">
             <h2>📅 Schedule New Event</h2>
@@ -209,12 +212,22 @@ const App = () => {
         </div>
       </main>
 
-      {/* Mobile Mini Game */}
+      {/* 🐺 Mini Game */}
       <div className="mini-game">
-        <h2>👾 Alien Tap Game</h2>
+        <h2>🐺 Make a Wolf Pack</h2>
         <div className="game-container">
-          <div className="alien" id="alien" onClick={handleAlienClick}></div>
-          <p>Score: {score}</p>
+          <div
+            id="wolf-icon"
+            className="wolf-icon"
+            onClick={handleWolfClick}
+            style={{ top: '30%', left: '30%' }}
+          ></div>
+        </div>
+        <p>Tap the wolf to grow your pack!</p>
+        <div className="wolf-pack">
+          {pack.map((url, i) => (
+            <img src={url} alt="Wolf" key={i} />
+          ))}
         </div>
       </div>
     </div>

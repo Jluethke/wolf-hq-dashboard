@@ -185,16 +185,32 @@ li {
     margin: 0 auto;
   }
 
-  .alien {
+  .wolf-icon {
     position: absolute;
-    width: 50px;
-    height: 50px;
-    background-image: url('https://i.imgur.com/CJ1eXX2.png');
+    width: 60px;
+    height: 60px;
+    background-image: url('https://i.imgur.com/LbSHfMu.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
     transition: top 0.3s ease, left 0.3s ease;
+  }
+
+  .wolf-pack {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .wolf-pack img {
+    height: 32px;
+    width: auto;
+    border-radius: 50%;
+    background-color: white;
+    padding: 2px;
   }
 
   .mini-game p {
