@@ -15,13 +15,31 @@ const App = () => {
   const [banned, setBanned] = useState(() => getStored('bannedUsers', []));
   const [eventData, setEventData] = useState({ title: '', date: '', time: '', description: '' });
   const [events, setEvents] = useState(() => getStored('events', []));
+  const [score, setScore] = useState(0);
 
   useEffect(() => localStorage.setItem('announcements', JSON.stringify(announcements)), [announcements]);
   useEffect(() => localStorage.setItem('welcomedMembers', JSON.stringify(welcomed)), [welcomed]);
   useEffect(() => localStorage.setItem('bannedUsers', JSON.stringify(banned)), [banned]);
   useEffect(() => localStorage.setItem('events', JSON.stringify(events)), [events]);
 
-  // === Announcement Logic ===
+  // === Alien Tap Game ===
+  useEffect(() => {
+    const alien = document.getElementById("alien");
+    const moveAlien = () => {
+      const x = Math.random() * 90;
+      const y = Math.random() * 90;
+      if (alien) {
+        alien.style.top = `${y}%`;
+        alien.style.left = `${x}%`;
+      }
+    };
+    const interval = setInterval(() => moveAlien(), 1500);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleAlienClick = () => setScore(score + 1);
+
+  // === Dashboard Actions ===
   const postAnnouncement = () => {
     if (announcement.trim()) {
       setAnnouncements([...announcements, announcement]);
@@ -42,7 +60,6 @@ const App = () => {
     setAnnouncements(copy);
   };
 
-  // === Welcome Logic ===
   const welcomeUser = () => {
     if (welcomeName.trim()) {
       setWelcomed([...welcomed, welcomeName]);
@@ -55,7 +72,6 @@ const App = () => {
     setWelcomed(copy);
   };
 
-  // === Ban Logic ===
   const kickUser = () => {
     if (kickName.trim()) {
       setBanned([...banned, kickName]);
@@ -68,7 +84,6 @@ const App = () => {
     setBanned(copy);
   };
 
-  // === Events Logic ===
   const addEvent = () => {
     const { title, date, time, description } = eventData;
     if (title && date && time) {
@@ -105,7 +120,7 @@ const App = () => {
       </header>
 
       <main className="dashboard">
-        {/* Column 1 - Orange */}
+        {/* Orange Column */}
         <div className="stack-column">
           <div className="panel orange-panel">
             <h2>📢 Post Announcement</h2>
@@ -126,7 +141,7 @@ const App = () => {
           </div>
         </div>
 
-        {/* Column 2 - Green */}
+        {/* Green Column */}
         <div className="stack-column">
           <div className="panel green-panel">
             <h2>👋 Welcome Members</h2>
@@ -146,7 +161,7 @@ const App = () => {
           </div>
         </div>
 
-        {/* Column 3 - Red */}
+        {/* Red Column */}
         <div className="stack-column">
           <div className="panel red-panel">
             <h2>🚫 Kick/Ban User</h2>
@@ -166,7 +181,7 @@ const App = () => {
           </div>
         </div>
 
-        {/* Column 4 - Blue */}
+        {/* Blue Column */}
         <div className="stack-column">
           <div className="panel blue-panel">
             <h2>📅 Schedule New Event</h2>
@@ -193,6 +208,15 @@ const App = () => {
           </div>
         </div>
       </main>
+
+      {/* Mobile Mini Game */}
+      <div className="mini-game">
+        <h2>👾 Alien Tap Game</h2>
+        <div className="game-container">
+          <div className="alien" id="alien" onClick={handleAlienClick}></div>
+          <p>Score: {score}</p>
+        </div>
+      </div>
     </div>
   );
 };

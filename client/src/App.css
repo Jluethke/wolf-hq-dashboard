@@ -158,7 +158,53 @@ li {
   margin-bottom: 0.5rem;
 }
 
-/* RESPONSIVE BEHAVIOR */
+/* MINI GAME SECTION */
+.mini-game {
+  display: none;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .mini-game {
+    display: block;
+  }
+
+  .mini-game h2 {
+    color: #00eaff;
+    margin-bottom: 1rem;
+  }
+
+  .game-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background-color: #222;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+
+  .alien {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-image: url('https://i.imgur.com/CJ1eXX2.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    transition: top 0.3s ease, left 0.3s ease;
+  }
+
+  .mini-game p {
+    margin-top: 0.8rem;
+    font-size: 1.2rem;
+    color: white;
+  }
+}
+
+/* RESPONSIVE ADJUSTMENTS */
 @media (max-width: 1024px) {
   .dashboard {
     grid-template-columns: repeat(2, 1fr);
