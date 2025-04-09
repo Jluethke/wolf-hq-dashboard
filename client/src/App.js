@@ -1,13 +1,13 @@
 
 import React from "react";
 import "./App.css";
-import wolfLogo from "./assets/wolf-logo.png";
+import logo from "./assets/logo.png";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={wolfLogo} className="App-logo" alt="Wolf HQ Logo" />
+        <img src={logo} className="App-logo" alt="Wolf HQ Logo" />
         <div className="header-text">
           <div className="header-title">🐺 Welcome to Wolf HQ Dashboard</div>
           <div className="header-subtitle">The central command for all Warzone missions!</div>
