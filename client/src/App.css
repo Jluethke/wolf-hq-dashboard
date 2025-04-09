@@ -14,49 +14,53 @@ body {
 }
 
 .App-header {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 1rem 2rem;
+  text-align: center;
   background-color: #1c1c1c;
+  padding: 1rem;
   border-bottom: 1px solid #333;
 }
 
 .App-header img {
   height: 80px;
-  margin-right: 1rem;
 }
 
 .App-header h1 {
   color: orange;
+  margin: 0.3rem 0 0.2rem;
+  font-size: 2.5rem;
+}
+
+.App-header p {
   margin: 0;
-  font-size: 2rem;
-  text-align: left;
+  font-size: 1rem;
+  color: #eee;
 }
 
 .dashboard {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 1.5rem;
+  justify-content: center;
   margin-top: 2rem;
 }
 
-/* Panel base */
+/* Panels */
 .panel {
   padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   text-align: left;
   color: white;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
-/* Panel Colors */
+/* Color-coded panels */
 .orange { background-color: #ff8800; }
 .green  { background-color: #00b04f; }
 .red    { background-color: #cc3344; }
 .blue   { background-color: #0066cc; }
 
-/* Panel Headers */
 .panel h2 {
   font-size: 1.3rem;
   margin-top: 0;
@@ -74,7 +78,7 @@ input, textarea, select {
   font-size: 0.95rem;
 }
 
-/* Button Colors based on panel */
+/* Button color contrast logic */
 .orange button { background-color: #00b04f; color: white; }  /* Green on orange */
 .green button  { background-color: #ff8800; color: white; }  /* Orange on green */
 .red button    { background-color: #0066cc; color: white; }  /* Blue on red */
@@ -93,7 +97,6 @@ button:hover {
   opacity: 0.85;
 }
 
-/* Utility styles */
 ul {
   padding-left: 1rem;
 }
@@ -110,18 +113,13 @@ li {
   font-style: italic;
 }
 
-/* Mobile adjustments */
+/* Responsive grid on mobile */
 @media (max-width: 768px) {
-  .App-header {
-    flex-direction: column;
-    align-items: start;
+  .dashboard {
+    grid-template-columns: 1fr;
   }
 
   .App-header h1 {
-    font-size: 1.5rem;
-  }
-
-  .dashboard {
-    grid-template-columns: 1fr;
+    font-size: 2rem;
   }
 }
