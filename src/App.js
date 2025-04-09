@@ -18,7 +18,7 @@ function App() {
 
         </div>
         <div>
-          <h1 className="title">🐺 Welcome to Wolf HQ Dashboard</h1>
+          <h1 className="title">Welcome to Wolf HQ Dashboard</h1>
           <p className="subtitle">The central command for all Warzone missions!</p>
         </div>
       </header>
