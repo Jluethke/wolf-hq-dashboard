@@ -1,22 +1,84 @@
 .App {
-  text-align: center;
-  background-color: #111;
+  background-color: #0e0e0e;
   color: #fff;
-  height: 100vh;
-  padding-top: 40px;
+  min-height: 100vh;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  padding: 1rem;
+}
+
+.App-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #333;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.logo-container {
+  flex-shrink: 0;
 }
 
 .App-logo {
-  height: 150px;
-  margin-bottom: 20px;
+  height: 100px;
+  animation: float 3s ease-in-out infinite;
 }
 
-.App-header h1 {
-  color: #ffa500; /* orange */
-  font-size: 2.5rem;
+.title {
+  color: orange;
+  margin: 0;
+  font-size: 2rem;
 }
 
-.App-header p {
-  font-size: 1.25rem;
-  color: #ccc;
+.subtitle {
+  font-size: 1rem;
+  color: #aaa;
+}
+
+.dashboard {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.panel {
+  background: #1a1a1a;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #333;
+}
+
+.panel h2 {
+  margin-top: 0;
+  color: #f9c74f;
+}
+
+.panel ul {
+  list-style: none;
+  padding: 0;
+}
+
+.panel li {
+  margin: 0.5rem 0;
+}
+
+button {
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  margin: 0.25rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #ff8267;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
 }
