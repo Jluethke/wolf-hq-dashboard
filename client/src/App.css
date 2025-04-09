@@ -16,7 +16,7 @@ body {
 .App-header {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   padding: 1rem 2rem;
   background-color: #1c1c1c;
   border-bottom: 1px solid #333;
@@ -34,13 +34,6 @@ body {
   text-align: left;
 }
 
-.App-header p {
-  margin-left: 1rem;
-  color: #ccc;
-  font-size: 0.9rem;
-  text-align: left;
-}
-
 .dashboard {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -48,7 +41,7 @@ body {
   margin-top: 2rem;
 }
 
-/* Panel Containers */
+/* Panel base */
 .panel {
   padding: 1rem;
   border-radius: 12px;
@@ -57,22 +50,13 @@ body {
   color: white;
 }
 
-.orange-panel {
-  background-color: #ff8800;
-}
+/* Panel Colors */
+.orange { background-color: #ff8800; }
+.green  { background-color: #00b04f; }
+.red    { background-color: #cc3344; }
+.blue   { background-color: #0066cc; }
 
-.green-panel {
-  background-color: #00b04f;
-}
-
-.red-panel {
-  background-color: #cc3344;
-}
-
-.blue-panel {
-  background-color: #0066cc;
-}
-
+/* Panel Headers */
 .panel h2 {
   font-size: 1.3rem;
   margin-top: 0;
@@ -90,26 +74,11 @@ input, textarea, select {
   font-size: 0.95rem;
 }
 
-/* Buttons - by panel type */
-.orange-panel button {
-  background-color: #00b04f;
-  color: white;
-}
-
-.green-panel button {
-  background-color: #ff8800;
-  color: white;
-}
-
-.red-panel button {
-  background-color: #0066cc;
-  color: white;
-}
-
-.blue-panel button {
-  background-color: #cc3344;
-  color: white;
-}
+/* Button Colors based on panel */
+.orange button { background-color: #00b04f; color: white; }  /* Green on orange */
+.green button  { background-color: #ff8800; color: white; }  /* Orange on green */
+.red button    { background-color: #0066cc; color: white; }  /* Blue on red */
+.blue button   { background-color: #cc3344; color: white; }  /* Red on blue */
 
 button {
   border: none;
@@ -124,16 +93,15 @@ button:hover {
   opacity: 0.85;
 }
 
-/* Lists for entries */
+/* Utility styles */
 ul {
-  padding-left: 1.2rem;
+  padding-left: 1rem;
 }
 
 li {
   margin-bottom: 0.5rem;
 }
 
-/* Utility styles */
 .bold {
   font-weight: bold;
 }
