@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #111;
+  color: white;
+}
+
+.App-header {
+  padding: 40px;
+  text-align: center;
+  background-color: #222;
+}
+
+h1 {
+  color: orange;
+}
