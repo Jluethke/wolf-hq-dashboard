@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div className="logo-container">
-          <img src="/wolf-logo.png" alt="Wolf HQ Logo" className="App-logo" />
+          <img src="https://i.imgur.com/LbSHfMu.png" alt="Wolf HQ Logo" className="App-logo" />
 
         </div>
         <div>
