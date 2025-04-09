@@ -1,29 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
-function App() {
-  const [announcements, setAnnouncements] = useState([]);
-  const [announcementInput, setAnnouncementInput] = useState('');
+const App = () => {
+  // Local Storage Helpers
+  const getStored = (key, fallback) => {
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : fallback;
+  };
 
-  const [welcomedMembers, setWelcomedMembers] = useState([]);
-  const [memberInput, setMemberInput] = useState('');
+  // State Declarations
+  const [announcement, setAnnouncement] = useState('');
+  const [announcements, setAnnouncements] = useState(() => getStored('announcements', []));
+  const [welcomeName, setWelcomeName] = useState('');
+  const [welcomed, setWelcomed] = useState(() => getStored('welcomedMembers', []));
+  const [kickName, setKickName] = useState('');
+  const [banned, setBanned] = useState(() => getStored('bannedUsers', []));
+  const [eventData, setEventData] = useState({ title: '', date: '', time: '', description: '' });
+  const [events, setEvents] = useState(() => getStored('events', []));
 
-  const [bannedUsers, setBannedUsers] = useState([]);
-  const [banInput, setBanInput] = useState('');
+  // Persist on change
+  useEffect(() => localStorage.setItem('announcements', JSON.stringify(announcements)), [announcements]);
+  useEffect(() => localStorage.setItem('welcomedMembers', JSON.stringify(welcomed)), [welcomed]);
+  useEffect(() => localStorage.setItem('bannedUsers', JSON.stringify(banned)), [banned]);
+  useEffect(() => localStorage.setItem('events', JSON.stringify(events)), [events]);
 
-  const [events, setEvents] = useState([]);
-  const [eventInput, setEventInput] = useState({
-    title: '',
-    date: '',
-    time: '',
-    description: '',
-  });
-
-  // Post Announcement
+  // Announcements
   const postAnnouncement = () => {
-    if (announcementInput.trim()) {
-      setAnnouncements([...announcements, announcementInput]);
-      setAnnouncementInput('');
+    if (announcement.trim()) {
+      setAnnouncements([...announcements, announcement]);
+      setAnnouncement('');
     }
   };
 
@@ -33,172 +38,162 @@ function App() {
     setAnnouncements(copy);
   };
 
-  // Welcome Member
-  const welcomeMember = () => {
-    if (memberInput.trim()) {
-      setWelcomedMembers([...welcomedMembers, memberInput]);
-      setMemberInput('');
+  const editAnnouncement = (index) => {
+    const edited = prompt("Edit announcement:", announcements[index]);
+    if (edited !== null) {
+      const updated = [...announcements];
+      updated[index] = edited;
+      setAnnouncements(updated);
     }
   };
 
-  const unWelcomeMember = (index) => {
-    const copy = [...welcomedMembers];
-    copy.splice(index, 1);
-    setWelcomedMembers(copy);
+  // Welcome
+  const welcomeUser = () => {
+    if (welcomeName.trim()) {
+      setWelcomed([...welcomed, welcomeName]);
+      setWelcomeName('');
+    }
   };
 
-  // Kick/Ban
+  const undoWelcome = (index) => {
+    const copy = [...welcomed];
+    copy.splice(index, 1);
+    setWelcomed(copy);
+  };
+
+  // Ban
   const kickUser = () => {
-    if (banInput.trim()) {
-      setBannedUsers([...bannedUsers, banInput]);
-      setBanInput('');
+    if (kickName.trim()) {
+      setBanned([...banned, kickName]);
+      setKickName('');
     }
   };
 
   const unbanUser = (index) => {
-    const copy = [...bannedUsers];
+    const copy = [...banned];
     copy.splice(index, 1);
-    setBannedUsers(copy);
+    setBanned(copy);
   };
 
-  // Schedule Event
+  // Events
   const addEvent = () => {
-    const { title, date, time, description } = eventInput;
-    if (title && date && time && description) {
-      setEvents([...events, eventInput]);
-      setEventInput({ title: '', date: '', time: '', description: '' });
+    const { title, date, time, description } = eventData;
+    if (title && date && time) {
+      setEvents([...events, { title, date, time, description }]);
+      setEventData({ title: '', date: '', time: '', description: '' });
     }
   };
 
   const deleteEvent = (index) => {
-    const copy = [...events];
-    copy.splice(index, 1);
-    setEvents(copy);
+    const updated = [...events];
+    updated.splice(index, 1);
+    setEvents(updated);
+  };
+
+  const editEvent = (index) => {
+    const old = events[index];
+    const title = prompt("Edit event title:", old.title);
+    const date = prompt("Edit date:", old.date);
+    const time = prompt("Edit time:", old.time);
+    const description = prompt("Edit description:", old.description);
+    if (title && date && time) {
+      const updated = [...events];
+      updated[index] = { title, date, time, description };
+      setEvents(updated);
+    }
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src="https://i.imgur.com/LbSHfMu.png" alt="Wolf of Warzone Logo" className="App-logo" />
+        <img src="https://i.imgur.com/LbSHfMu.png" alt="Wolf HQ Logo" />
         <h1>Welcome to Wolf HQ Dashboard</h1>
         <p>The central command for all Warzone missions!</p>
       </header>
 
-      <div className="dashboard-grid">
-
-        {/* ORANGE */}
+      <main className="dashboard">
+        {/* Orange Panels */}
         <div className="panel orange">
           <h2>📢 Post Announcement</h2>
-          <input
-            type="text"
-            value={announcementInput}
-            onChange={(e) => setAnnouncementInput(e.target.value)}
-            placeholder="Enter announcement"
-          />
-          <button className="green-btn" onClick={postAnnouncement}>Post</button>
+          <input value={announcement} onChange={(e) => setAnnouncement(e.target.value)} placeholder="Enter announcement" />
+          <button onClick={postAnnouncement}>Post</button>
         </div>
         <div className="panel orange">
           <h2>📄 Announcements</h2>
           <ul>
-            {announcements.map((note, idx) => (
-              <li key={idx}>
-                {note}
-                <button className="red-btn mini" onClick={() => deleteAnnouncement(idx)}>🗑️</button>
+            {announcements.map((text, i) => (
+              <li key={i}>
+                {text}
+                <button onClick={() => editAnnouncement(i)}>✏️</button>
+                <button onClick={() => deleteAnnouncement(i)}>🗑️</button>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* GREEN */}
+        {/* Green Panels */}
         <div className="panel green">
           <h2>👋 Welcome Members</h2>
-          <input
-            type="text"
-            value={memberInput}
-            onChange={(e) => setMemberInput(e.target.value)}
-            placeholder="Member name"
-          />
-          <button className="orange-btn" onClick={welcomeMember}>Welcome</button>
+          <input value={welcomeName} onChange={(e) => setWelcomeName(e.target.value)} placeholder="Member name" />
+          <button onClick={welcomeUser}>Welcome</button>
         </div>
         <div className="panel green">
           <h2>🎉 Welcomed Members</h2>
           <ul>
-            {welcomedMembers.map((name, idx) => (
-              <li key={idx}>
-                {name}
-                <button className="red-btn mini" onClick={() => unWelcomeMember(idx)}>❌</button>
+            {welcomed.map((user, i) => (
+              <li key={i}>
+                {user}
+                <button onClick={() => undoWelcome(i)}>↩️</button>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* RED */}
+        {/* Red Panels */}
         <div className="panel red">
           <h2>🚫 Kick/Ban User</h2>
-          <input
-            type="text"
-            value={banInput}
-            onChange={(e) => setBanInput(e.target.value)}
-            placeholder="Username"
-          />
-          <button className="blue-btn" onClick={kickUser}>Kick</button>
+          <input value={kickName} onChange={(e) => setKickName(e.target.value)} placeholder="Username" />
+          <button onClick={kickUser}>Kick</button>
         </div>
         <div className="panel red">
           <h2>🔨 Banned Users</h2>
           <ul>
-            {bannedUsers.map((user, idx) => (
-              <li key={idx}>
+            {banned.map((user, i) => (
+              <li key={i}>
                 {user}
-                <button className="blue-btn mini" onClick={() => unbanUser(idx)}>↩️</button>
+                <button onClick={() => unbanUser(i)}>🛑</button>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* BLUE */}
+        {/* Blue Panels */}
         <div className="panel blue">
           <h2>📅 Schedule New Event</h2>
-          <input
-            type="text"
-            value={eventInput.title}
-            onChange={(e) => setEventInput({ ...eventInput, title: e.target.value })}
-            placeholder="Event Title"
-          />
-          <input
-            type="date"
-            value={eventInput.date}
-            onChange={(e) => setEventInput({ ...eventInput, date: e.target.value })}
-          />
-          <input
-            type="time"
-            value={eventInput.time}
-            onChange={(e) => setEventInput({ ...eventInput, time: e.target.value })}
-          />
-          <textarea
-            value={eventInput.description}
-            onChange={(e) => setEventInput({ ...eventInput, description: e.target.value })}
-            placeholder="Description"
-          />
-          <button className="red-btn" onClick={addEvent}>Add Event</button>
+          <input placeholder="Event Title" value={eventData.title} onChange={(e) => setEventData({ ...eventData, title: e.target.value })} />
+          <input type="date" value={eventData.date} onChange={(e) => setEventData({ ...eventData, date: e.target.value })} />
+          <input type="time" value={eventData.time} onChange={(e) => setEventData({ ...eventData, time: e.target.value })} />
+          <textarea placeholder="Description" value={eventData.description} onChange={(e) => setEventData({ ...eventData, description: e.target.value })} />
+          <button onClick={addEvent}>Add Event</button>
         </div>
         <div className="panel blue">
           <h2>📅 Upcoming Events</h2>
           <ul>
-            {events.map((event, idx) => (
-              <li key={idx}>
-                <strong>{event.title}</strong> — {event.date} at {event.time}
+            {events.map((evt, i) => (
+              <li key={i}>
+                <strong>{evt.title}</strong> — {evt.date} @ {evt.time}
                 <br />
-                <em>{event.description}</em>
+                <em>{evt.description}</em>
                 <br />
-                <button className="red-btn mini" onClick={() => deleteEvent(idx)}>🗑️</button>
+                <button onClick={() => editEvent(i)}>✏️</button>
+                <button onClick={() => deleteEvent(i)}>❌</button>
               </li>
             ))}
           </ul>
         </div>
-
-      </div>
+      </main>
     </div>
   );
-}
+};
 
 export default App;
