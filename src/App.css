@@ -1,16 +1,22 @@
-body {
-  margin: 0;
-  font-family: sans-serif;
-  background-color: #111;
-  color: white;
-}
-
-.App-header {
-  padding: 40px;
+.App {
   text-align: center;
-  background-color: #222;
+  background-color: #111;
+  color: #fff;
+  height: 100vh;
+  padding-top: 40px;
 }
 
-h1 {
-  color: orange;
+.App-logo {
+  height: 150px;
+  margin-bottom: 20px;
+}
+
+.App-header h1 {
+  color: #ffa500; /* orange */
+  font-size: 2.5rem;
+}
+
+.App-header p {
+  font-size: 1.25rem;
+  color: #ccc;
 }
