@@ -21,7 +21,7 @@ const App = () => {
   useEffect(() => localStorage.setItem('bannedUsers', JSON.stringify(banned)), [banned]);
   useEffect(() => localStorage.setItem('events', JSON.stringify(events)), [events]);
 
-  // --- Announcement Logic ---
+  // Announcement logic
   const postAnnouncement = () => {
     if (announcement.trim()) {
       setAnnouncements([...announcements, announcement]);
@@ -44,7 +44,7 @@ const App = () => {
     setAnnouncements(copy);
   };
 
-  // --- Welcome Logic ---
+  // Welcome logic
   const welcomeUser = () => {
     if (welcomeName.trim()) {
       setWelcomed([...welcomed, welcomeName]);
@@ -58,7 +58,7 @@ const App = () => {
     setWelcomed(copy);
   };
 
-  // --- Kick/Ban Logic ---
+  // Ban logic
   const kickUser = () => {
     if (kickName.trim()) {
       setBanned([...banned, kickName]);
@@ -72,7 +72,7 @@ const App = () => {
     setBanned(copy);
   };
 
-  // --- Events Logic ---
+  // Events logic
   const addEvent = () => {
     const { title, date, time, description } = eventData;
     if (title && date && time) {
@@ -104,12 +104,14 @@ const App = () => {
     <div className="App">
       <header className="App-header">
         <img src="https://i.imgur.com/LbSHfMu.png" alt="Wolf HQ Logo" className="App-logo" />
-        <h1 className="App-title">Welcome to Wolf HQ Dashboard</h1>
-        <p className="App-subtitle">The central command for all Warzone missions!</p>
+        <div className="header-text">
+          <h1 className="App-title">Welcome to Wolf HQ Dashboard</h1>
+          <p className="App-subtitle">The central command for all Warzone missions!</p>
+        </div>
       </header>
 
       <main className="dashboard">
-        {/* Column 1: Orange */}
+        {/* Orange Stack */}
         <div className="stack-column">
           <div className="panel orange-panel">
             <h2>📢 Post Announcement</h2>
@@ -130,7 +132,7 @@ const App = () => {
           </div>
         </div>
 
-        {/* Column 2: Green */}
+        {/* Green Stack */}
         <div className="stack-column">
           <div className="panel green-panel">
             <h2>👋 Welcome Members</h2>
@@ -150,7 +152,7 @@ const App = () => {
           </div>
         </div>
 
-        {/* Column 3: Red */}
+        {/* Red Stack */}
         <div className="stack-column">
           <div className="panel red-panel">
             <h2>🚫 Kick/Ban User</h2>
@@ -170,7 +172,7 @@ const App = () => {
           </div>
         </div>
 
-        {/* Column 4: Blue */}
+        {/* Blue Stack */}
         <div className="stack-column">
           <div className="panel blue-panel">
             <h2>📅 Schedule New Event</h2>
