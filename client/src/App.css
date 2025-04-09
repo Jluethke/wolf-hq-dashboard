@@ -1,11 +1,16 @@
+/* Import Poppins from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* GLOBAL RESET */
 body {
   margin: 0;
   padding: 0;
   background-color: #121212;
   color: white;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
+/* APP WRAPPER */
 .App {
   text-align: center;
   background-color: #121212;
@@ -13,65 +18,64 @@ body {
   padding: 2rem;
 }
 
+/* HEADER AREA */
 .App-header {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   background-color: #1c1c1c;
-  padding: 1rem 2rem;
+  padding: 2rem 1rem;
   border-bottom: 1px solid #333;
-  height: 200px;
+  flex-wrap: wrap;
+  gap: 2rem;
 }
 
 .App-logo {
-  height: 100%;
-  max-height: 180px;
+  height: 160px;
   width: auto;
-  object-fit: contain;
-  margin-right: 2rem;
+  max-width: 100%;
 }
 
 .header-text {
-  flex: 1;
-  text-align: center;
+  max-width: 600px;
 }
 
 .App-title {
   color: orange;
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   margin: 0;
 }
 
 .App-subtitle {
   color: #ccc;
-  font-size: 0.95rem;
-  margin-top: 0.25rem;
+  font-size: 1rem;
+  margin-top: 0.5rem;
   text-align: center;
-  width: 100%;
+  line-height: 1.4;
 }
 
-/* GRID LAYOUT FOR VERTICAL STACKING BY COLOR GROUP */
+/* DASHBOARD GRID */
 .dashboard {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
   margin-top: 2rem;
+  padding: 0 1rem;
 }
 
-/* VERTICAL STACKS FOR EACH COLOR GROUP */
 .stack-column {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
 }
 
-/* PANEL BASE */
+/* PANEL CONTAINERS */
 .panel {
   border-radius: 12px;
   padding: 1rem;
   text-align: left;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  background-color: #222;
 }
 
 /* PANEL COLORS */
@@ -91,7 +95,7 @@ body {
   background-color: #0066cc;
 }
 
-/* CONTRAST BUTTON COLORS */
+/* CONTRASTING BUTTON COLORS */
 .orange-panel button {
   background-color: #00b04f;
   color: white;
@@ -112,8 +116,9 @@ body {
   color: white;
 }
 
-/* SHARED STYLES */
-input, textarea {
+/* SHARED ELEMENT STYLES */
+input,
+textarea {
   width: 100%;
   padding: 0.6rem;
   border: none;
@@ -121,6 +126,10 @@ input, textarea {
   margin-bottom: 1rem;
   font-family: inherit;
   font-size: 0.95rem;
+}
+
+textarea {
+  resize: vertical;
 }
 
 button {
@@ -149,15 +158,35 @@ li {
   margin-bottom: 0.5rem;
 }
 
-/* RESPONSIVE DESIGN */
+/* RESPONSIVE BEHAVIOR */
 @media (max-width: 1024px) {
   .dashboard {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .App-logo {
+    height: 120px;
+  }
+
+  .App-title {
+    font-size: 2rem;
   }
 }
 
 @media (max-width: 768px) {
   .dashboard {
     grid-template-columns: 1fr;
+  }
+
+  .App-logo {
+    height: 100px;
+  }
+
+  .App-title {
+    font-size: 1.6rem;
+  }
+
+  .App-subtitle {
+    font-size: 0.9rem;
   }
 }

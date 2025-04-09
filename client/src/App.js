@@ -21,58 +21,54 @@ const App = () => {
   useEffect(() => localStorage.setItem('bannedUsers', JSON.stringify(banned)), [banned]);
   useEffect(() => localStorage.setItem('events', JSON.stringify(events)), [events]);
 
-  // Announcement logic
+  // === Announcement Logic ===
   const postAnnouncement = () => {
     if (announcement.trim()) {
       setAnnouncements([...announcements, announcement]);
       setAnnouncement('');
     }
   };
-
-  const editAnnouncement = (index) => {
-    const edited = prompt("Edit announcement:", announcements[index]);
+  const editAnnouncement = (i) => {
+    const edited = prompt("Edit announcement:", announcements[i]);
     if (edited !== null) {
       const copy = [...announcements];
-      copy[index] = edited;
+      copy[i] = edited;
       setAnnouncements(copy);
     }
   };
-
-  const deleteAnnouncement = (index) => {
+  const deleteAnnouncement = (i) => {
     const copy = [...announcements];
-    copy.splice(index, 1);
+    copy.splice(i, 1);
     setAnnouncements(copy);
   };
 
-  // Welcome logic
+  // === Welcome Logic ===
   const welcomeUser = () => {
     if (welcomeName.trim()) {
       setWelcomed([...welcomed, welcomeName]);
       setWelcomeName('');
     }
   };
-
-  const undoWelcome = (index) => {
+  const undoWelcome = (i) => {
     const copy = [...welcomed];
-    copy.splice(index, 1);
+    copy.splice(i, 1);
     setWelcomed(copy);
   };
 
-  // Ban logic
+  // === Ban Logic ===
   const kickUser = () => {
     if (kickName.trim()) {
       setBanned([...banned, kickName]);
       setKickName('');
     }
   };
-
-  const unbanUser = (index) => {
+  const unbanUser = (i) => {
     const copy = [...banned];
-    copy.splice(index, 1);
+    copy.splice(i, 1);
     setBanned(copy);
   };
 
-  // Events logic
+  // === Events Logic ===
   const addEvent = () => {
     const { title, date, time, description } = eventData;
     if (title && date && time) {
@@ -80,24 +76,22 @@ const App = () => {
       setEventData({ title: '', date: '', time: '', description: '' });
     }
   };
-
-  const editEvent = (index) => {
-    const evt = events[index];
+  const editEvent = (i) => {
+    const evt = events[i];
     const title = prompt("Edit event title:", evt.title);
     const date = prompt("Edit event date:", evt.date);
     const time = prompt("Edit event time:", evt.time);
     const description = prompt("Edit event description:", evt.description);
     if (title && date && time) {
-      const updated = [...events];
-      updated[index] = { title, date, time, description };
-      setEvents(updated);
+      const copy = [...events];
+      copy[i] = { title, date, time, description };
+      setEvents(copy);
     }
   };
-
-  const deleteEvent = (index) => {
-    const updated = [...events];
-    updated.splice(index, 1);
-    setEvents(updated);
+  const deleteEvent = (i) => {
+    const copy = [...events];
+    copy.splice(i, 1);
+    setEvents(copy);
   };
 
   return (
@@ -111,7 +105,7 @@ const App = () => {
       </header>
 
       <main className="dashboard">
-        {/* Orange Stack */}
+        {/* Column 1 - Orange */}
         <div className="stack-column">
           <div className="panel orange-panel">
             <h2>📢 Post Announcement</h2>
@@ -121,18 +115,18 @@ const App = () => {
           <div className="panel orange-panel">
             <h2>📄 Announcements</h2>
             <ul>
-              {announcements.map((item, index) => (
-                <li key={index}>
-                  {item}
-                  <button onClick={() => editAnnouncement(index)}>✏️</button>
-                  <button onClick={() => deleteAnnouncement(index)}>🗑️</button>
+              {announcements.map((text, i) => (
+                <li key={i}>
+                  {text}
+                  <button onClick={() => editAnnouncement(i)}>✏️</button>
+                  <button onClick={() => deleteAnnouncement(i)}>🗑️</button>
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        {/* Green Stack */}
+        {/* Column 2 - Green */}
         <div className="stack-column">
           <div className="panel green-panel">
             <h2>👋 Welcome Members</h2>
@@ -142,17 +136,17 @@ const App = () => {
           <div className="panel green-panel">
             <h2>🎉 Welcomed Members</h2>
             <ul>
-              {welcomed.map((name, index) => (
-                <li key={index}>
+              {welcomed.map((name, i) => (
+                <li key={i}>
                   {name}
-                  <button onClick={() => undoWelcome(index)}>↩️</button>
+                  <button onClick={() => undoWelcome(i)}>↩️</button>
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        {/* Red Stack */}
+        {/* Column 3 - Red */}
         <div className="stack-column">
           <div className="panel red-panel">
             <h2>🚫 Kick/Ban User</h2>
@@ -162,17 +156,17 @@ const App = () => {
           <div className="panel red-panel">
             <h2>🔨 Banned Users</h2>
             <ul>
-              {banned.map((user, index) => (
-                <li key={index}>
+              {banned.map((user, i) => (
+                <li key={i}>
                   {user}
-                  <button onClick={() => unbanUser(index)}>🛑</button>
+                  <button onClick={() => unbanUser(i)}>🛑</button>
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        {/* Blue Stack */}
+        {/* Column 4 - Blue */}
         <div className="stack-column">
           <div className="panel blue-panel">
             <h2>📅 Schedule New Event</h2>
@@ -185,14 +179,14 @@ const App = () => {
           <div className="panel blue-panel">
             <h2>📅 Upcoming Events</h2>
             <ul>
-              {events.map((event, index) => (
-                <li key={index}>
+              {events.map((event, i) => (
+                <li key={i}>
                   <strong>{event.title}</strong> — {event.date} @ {event.time}
                   <br />
                   <em>{event.description}</em>
                   <br />
-                  <button onClick={() => editEvent(index)}>✏️</button>
-                  <button onClick={() => deleteEvent(index)}>❌</button>
+                  <button onClick={() => editEvent(i)}>✏️</button>
+                  <button onClick={() => deleteEvent(i)}>❌</button>
                 </li>
               ))}
             </ul>
